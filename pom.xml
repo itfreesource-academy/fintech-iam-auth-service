@@ -5,36 +5,91 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.itfs.fintech</groupId>
-        <artifactId>fintech-platform-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
     </parent>
 
-    <artifactId>auth-identity-service</artifactId>
-    <name>ITFS FinTech :: Auth &amp; Identity Service</name>
-    <description>OAuth2 &amp; JWT Issuer with Redis Token Caching and RBAC</description>
+    <groupId>com.itfs.fintech</groupId>
+    <artifactId>fintech-iam-auth-service</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>ITFS FinTech :: IAM &amp; Identity Service</name>
+    <description>Enterprise IAM, OAuth2 &amp; OIDC Identity Provider with Step-Up Authentication and Redis Token Caching</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <springdoc.version>2.5.0</springdoc.version>
+        <jjwt.version>0.12.5</jjwt.version>
+    </properties>
 
     <dependencies>
+        <!-- Shared Contracts & DTOs -->
+        <dependency>
+            <groupId>com.itfs.fintech</groupId>
+            <artifactId>fintech-contracts-grpc-dto</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Web & Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
+        <!-- Redis Token Store & Distributed Caching -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <!-- JWT Engine -->
         <dependency>
-            <groupId>com.itfs.fintech</groupId>
-            <artifactId>common-security</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.itfs.fintech</groupId>
-            <artifactId>common-observability</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Actuator & OpenAPI -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
